@@ -17,9 +17,15 @@
  */
 package net.skyebook.betaville.json;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.JsonParser;
 
 import edu.poly.bxmc.betaville.jme.map.ILocation;
 import edu.poly.bxmc.betaville.jme.map.UTMCoordinate;
@@ -38,15 +44,43 @@ import edu.poly.bxmc.betaville.net.ProtectedManager;
  *
  */
 public class JSONClientManager implements ProtectedManager {
-	
+
 	private String baseURL = "http://localhost/service/service.php";
-	
+
+	private JsonFactory jsonFactory;
+
+	// Set to false if you'd prefer to have unzipped responses returned
+	private boolean useGZIP = true;
+
 	private static final String REQUEST_GZIP = "gz=1";
 
 	/**
 	 * 
 	 */
 	public JSONClientManager(){
+		jsonFactory = new JsonFactory();
+	}
+
+	private JsonParser doRequest(String request){
+		try {
+			URL url = null;
+			if(useGZIP){
+				url = new URL(baseURL+"?"+request+"&"+REQUEST_GZIP);
+			}
+			else{
+				url = new URL(baseURL+"?"+request+"&"+REQUEST_GZIP);
+			}
+
+			return jsonFactory.createJsonParser(url);
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 	/* (non-Javadoc)
@@ -81,7 +115,8 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public boolean checkNameAvailability(String name) {
-		// TODO Auto-generated method stub
+		String request = "section=user&request=available&username="+name;
+		JsonParser response = doRequest(request);
 		return false;
 	}
 
@@ -135,7 +170,10 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public List<Design> findAllDesignsByCity(int cityID) {
-		// TODO Auto-generated method stub
+
+
+		String request = "?section=design&request=findbycity&city=2";
+
 		return null;
 	}
 

@@ -26,6 +26,7 @@ import java.util.List;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.JsonParser;
+import org.codehaus.jackson.JsonToken;
 
 import edu.poly.bxmc.betaville.jme.map.ILocation;
 import edu.poly.bxmc.betaville.jme.map.UTMCoordinate;
@@ -117,6 +118,23 @@ public class JSONClientManager implements ProtectedManager {
 	public boolean checkNameAvailability(String name) {
 		String request = "section=user&request=available&username="+name;
 		JsonParser response = doRequest(request);
+		
+		try {
+			response.nextToken();
+			while(response.nextToken()!=JsonToken.END_OBJECT){
+				if(response.getCurrentName().equals("usernameAvailable")){
+					response.nextToken();
+					return response.getValueAsBoolean();
+				}
+			}
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 
@@ -134,8 +152,10 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public Design findDesignByID(int designID) {
-		// TODO Auto-generated method stub
-		return null;
+		String request = "section=design&request=findbyid&id="+designID;
+		JsonParser response = doRequest(request);
+		
+		return JSONConverter.toDesign(response);
 	}
 
 	/* (non-Javadoc)
@@ -319,7 +339,11 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public String[] findCityByID(int cityID) {
-		// TODO Auto-generated method stub
+		
+		String request = "section=design&request=findbyid&id="+cityID;
+		JsonParser response = doRequest(request);
+		
+		
 		return null;
 	}
 

@@ -1,0 +1,3 @@
+h1. Betaville JSON Connection - Connect Betaville to the PHP Web Service
+
+This is an alternative (currently experimental) implementation of the Betaville ClientManager classes which interprets JSON responses sent from the PHP web service

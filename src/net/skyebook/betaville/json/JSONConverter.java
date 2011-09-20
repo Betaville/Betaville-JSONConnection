@@ -135,10 +135,9 @@ public class JSONConverter{
 	}
 	
 	public static ILocation toLocation(JsonParser json) throws JsonParseException, IOException{
+		GPSCoordinate gps = new GPSCoordinate(0, 0, 0);
 		
-		if(json.nextToken() != JsonToken.END_OBJECT){
-			
-			GPSCoordinate gps = new GPSCoordinate(0, 0, 0);
+		while(json.nextToken() != JsonToken.END_OBJECT){
 			
 			if(json.getCurrentName().equals("lat")){
 				json.nextToken();
@@ -153,8 +152,8 @@ public class JSONConverter{
 				gps.setLongitude(json.getDoubleValue());
 			}
 			
-			return gps;
 		}
-		else return null;
+		
+		return gps;
 	}
 }

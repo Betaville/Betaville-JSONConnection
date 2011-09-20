@@ -36,6 +36,7 @@ public class JSONRequestTest {
 		
 		Design design = jcm.findDesignByID(3894);
 		System.out.println(design.toString());
+		System.out.println(design.getCoordinate());
 	}
 
 }

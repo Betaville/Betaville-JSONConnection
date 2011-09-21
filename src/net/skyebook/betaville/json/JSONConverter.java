@@ -63,13 +63,24 @@ public class JSONConverter{
 		List<Design> designs = new ArrayList<Design>();
 
 		try {
+
 			json.nextToken();
-			
-			while(json.nextToken()!=JsonToken.END_OBJECT){
-				designs.add(toDesign(json));
-				json.nextToken();
+			JsonToken token;
+
+			boolean arrayEntered = false;
+			while((token = json.nextToken())!=JsonToken.END_OBJECT){
+
+				if(token == JsonToken.START_ARRAY){
+					System.out.println("Start Array");
+					arrayEntered=true;
+				}
+
+				if(arrayEntered){
+					designs.add(toDesign(json));
+					json.nextToken();
+				}
 			}
-			
+
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,8 +88,6 @@ public class JSONConverter{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		System.out.println(designs.size() + " designs retrieved");
 
 		return designs;
 	}

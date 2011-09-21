@@ -17,6 +17,8 @@
  */
 package net.skyebook.betaville.json;
 
+import java.util.List;
+
 import edu.poly.bxmc.betaville.model.Design;
 
 /**
@@ -37,6 +39,9 @@ public class JSONRequestTest {
 		Design design = jcm.findDesignByID(3894);
 		System.out.println(design.toString());
 		System.out.println(design.getCoordinate());
+		
+		List<Design> designs = jcm.findAllDesignsByCity(2);
+		System.out.println(designs.size() + " designs retrieved");
 	}
 
 }

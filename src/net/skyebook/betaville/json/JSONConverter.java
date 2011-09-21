@@ -18,6 +18,7 @@
 package net.skyebook.betaville.json;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,6 +60,8 @@ public class JSONConverter{
 	}
 	
 	public static List<Design> toDesignList(JsonParser json){
+		
+		
 		return null;
 	}
 	
@@ -71,8 +74,6 @@ public class JSONConverter{
 			json.nextToken();
 			
 			while(json.nextToken()!=JsonToken.END_OBJECT){
-				
-				System.out.println(json.getCurrentName());
 				
 				if(json.getCurrentName().equals("designID")){
 					json.nextToken();

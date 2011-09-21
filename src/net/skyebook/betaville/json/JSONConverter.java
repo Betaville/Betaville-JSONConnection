@@ -41,40 +41,58 @@ import edu.poly.bxmc.betaville.model.VideoDesign;
  *
  */
 public class JSONConverter{
-	
+
 	private static HashMap<String, Class<? extends Design>> designTypeMap;
-	
+
 	private static Design tempDesign;
-	
+
 	static{
 		designTypeMap = new HashMap<String, Class<? extends Design>>();
-		
+
 		designTypeMap.put("audio", AudibleDesign.class);
 		designTypeMap.put("video", VideoDesign.class);
 		designTypeMap.put("model", ModeledDesign.class);
 		designTypeMap.put("sketch", SketchedDesign.class);
 		designTypeMap.put("empty", EmptyDesign.class);
-		
+
 		tempDesign = new Design();
-		
+
 	}
-	
+
 	public static List<Design> toDesignList(JsonParser json){
-		
-		
-		return null;
-	}
-	
-	public static Design toDesign(JsonParser json){
-		
-		Design design = null;
-		
+		List<Design> designs = new ArrayList<Design>();
+
 		try {
-			
 			json.nextToken();
 			
 			while(json.nextToken()!=JsonToken.END_OBJECT){
-				
+				designs.add(toDesign(json));
+				json.nextToken();
+			}
+			
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(designs.size() + " designs retrieved");
+
+		return designs;
+	}
+
+	public static Design toDesign(JsonParser json){
+
+		Design design = null;
+
+		try {
+
+			json.nextToken();
+
+			while(json.nextToken()!=JsonToken.END_OBJECT){
+
 				if(json.getCurrentName().equals("designID")){
 					json.nextToken();
 					tempDesign.setID(Integer.parseInt(json.getText()));
@@ -120,10 +138,10 @@ public class JSONConverter{
 					json.nextToken();
 				}
 			}
-			
+
 			design = new Design();
 			design.load(tempDesign);
-			
+
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -131,15 +149,15 @@ public class JSONConverter{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return design;
 	}
-	
+
 	public static ILocation toLocation(JsonParser json) throws JsonParseException, IOException{
 		GPSCoordinate gps = new GPSCoordinate(0, 0, 0);
-		
+
 		while(json.nextToken() != JsonToken.END_OBJECT){
-			
+
 			if(json.getCurrentName().equals("lat")){
 				json.nextToken();
 				gps.setLatitude(json.getDoubleValue());
@@ -152,9 +170,9 @@ public class JSONConverter{
 				json.nextToken();
 				gps.setLongitude(json.getDoubleValue());
 			}
-			
+
 		}
-		
+
 		return gps;
 	}
 }

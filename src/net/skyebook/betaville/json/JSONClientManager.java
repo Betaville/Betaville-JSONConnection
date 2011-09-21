@@ -192,9 +192,10 @@ public class JSONClientManager implements ProtectedManager {
 	public List<Design> findAllDesignsByCity(int cityID) {
 
 
-		String request = "?section=design&request=findbycity&city=2";
-
-		return null;
+		String request = "section=design&request=findbycity&city="+cityID;
+		JsonParser response = doRequest(request);
+		
+		return JSONConverter.toDesignList(response);
 	}
 
 	/* (non-Javadoc)

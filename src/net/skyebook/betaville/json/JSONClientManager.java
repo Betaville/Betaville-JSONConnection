@@ -118,7 +118,7 @@ public class JSONClientManager implements ProtectedManager {
 	public boolean checkNameAvailability(String name) {
 		String request = "section=user&request=available&username="+name;
 		JsonParser response = doRequest(request);
-		
+
 		try {
 			response.nextToken();
 			while(response.nextToken()!=JsonToken.END_OBJECT){
@@ -134,7 +134,7 @@ public class JSONClientManager implements ProtectedManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return false;
 	}
 
@@ -154,7 +154,7 @@ public class JSONClientManager implements ProtectedManager {
 	public Design findDesignByID(int designID) {
 		String request = "section=design&request=findbyid&id="+designID;
 		JsonParser response = doRequest(request);
-		
+
 		return JSONConverter.toDesign(response);
 	}
 
@@ -172,8 +172,10 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public List<Design> findDesignsByUser(String user) {
-		// TODO Auto-generated method stub
-		return null;
+		String request = "section=design&request=findbyuser&user=sbook";
+		JsonParser response = doRequest(request);
+
+		return JSONConverter.toDesignList(response);
 	}
 
 	/* (non-Javadoc)
@@ -194,7 +196,7 @@ public class JSONClientManager implements ProtectedManager {
 
 		String request = "section=design&request=findbycity&city="+cityID;
 		JsonParser response = doRequest(request);
-		
+
 		return JSONConverter.toDesignList(response);
 	}
 
@@ -340,11 +342,11 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public String[] findCityByID(int cityID) {
-		
+
 		String request = "section=design&request=findbyid&id="+cityID;
 		JsonParser response = doRequest(request);
-		
-		
+
+
 		return null;
 	}
 

@@ -163,8 +163,10 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public List<Design> findDesignsByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		String request = "section=design&request=findbyname&name="+name;
+		JsonParser response = doRequest(request);
+
+		return JSONConverter.toDesignList(response);
 	}
 
 	/* (non-Javadoc)
@@ -172,7 +174,7 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public List<Design> findDesignsByUser(String user) {
-		String request = "section=design&request=findbyuser&user=sbook";
+		String request = "section=design&request=findbyuser&user="+user;
 		JsonParser response = doRequest(request);
 
 		return JSONConverter.toDesignList(response);

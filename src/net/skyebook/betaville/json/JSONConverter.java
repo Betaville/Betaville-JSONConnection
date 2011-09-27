@@ -142,6 +142,31 @@ public class JSONConverter{
 					json.nextToken();
 					tempDesign.setURL(json.getText());
 				}
+				
+				// See if this is a specified type of design
+				else if(json.getCurrentName().equals("designtype")){
+					json.nextToken();
+					
+					// what type of design is this?
+					Class<? extends Design> clazz = designTypeMap.get(json.getText());
+					
+					// create a new instance
+					Design newInstance = clazz.newInstance();
+					
+					// load existing information
+					newInstance.load(tempDesign);
+					
+					// assign new new instance to tempDesign
+					tempDesign = newInstance;
+				}
+				
+				/*
+				 * There is also the possibility that proposal information
+				 * has been received with the designs so we need to check
+				 * for it
+				 */
+				
+				
 				else{
 					// skip this token
 					json.nextToken();
@@ -155,6 +180,12 @@ public class JSONConverter{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

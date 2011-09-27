@@ -42,6 +42,9 @@ public class JSONRequestTest {
 		
 		List<Design> designs = jcm.findAllDesignsByCity(2);
 		System.out.println(designs.size() + " designs retrieved");
+		
+		designs = jcm.findDesignsByName("Jan");
+		System.out.println(designs.size() + " designs retrieved");
 	}
 
 }

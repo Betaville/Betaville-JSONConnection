@@ -18,6 +18,8 @@
 package net.skyebook.betaville.json;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,6 +49,9 @@ import edu.poly.bxmc.betaville.net.ProtectedManager;
 public class JSONClientManager implements ProtectedManager {
 
 	private String baseURL = "http://localhost/service/service.php";
+	
+	// The user's authentication token for this session as assigned by the server
+	private static String authToken;
 
 	private JsonFactory jsonFactory;
 
@@ -62,17 +67,33 @@ public class JSONClientManager implements ProtectedManager {
 		jsonFactory = new JsonFactory();
 	}
 
-	private JsonParser doRequest(String request){
+	private JsonParser doRequest(String request, PhysicalFileTransporter... fileTransporters){
 		try {
 			URL url = null;
 			if(useGZIP){
 				url = new URL(baseURL+"?"+request+"&"+REQUEST_GZIP);
 			}
 			else{
-				url = new URL(baseURL+"?"+request+"&"+REQUEST_GZIP);
+				url = new URL(baseURL+"?"+request);
 			}
+			
+			
+			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+			
+			for(PhysicalFileTransporter pft : fileTransporters){
+				connection.setDoOutput(true);
+				connection.setRequestMethod("POST");
+				OutputStream os = connection.getOutputStream();
+				byte[] data = pft.getData();
+				for(int i=0; i<data.length; i++){
+					os.write(data[i]);
+				}
+				//connection.setDoOutput(false);
+				//connection.setRequestMethod("GET");
+			}
+			
 
-			return jsonFactory.createJsonParser(url);
+			return jsonFactory.createJsonParser(connection.getInputStream());
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -547,7 +568,7 @@ public class JSONClientManager implements ProtectedManager {
 	@Override
 	public int addBase(Design design, String user, String pass,
 			PhysicalFileTransporter pft, PhysicalFileTransporter thumbTransporter) {
-		// TODO Auto-generated method stub
+		doRequest("section=design&request=addbase", pft);
 		return 0;
 	}
 

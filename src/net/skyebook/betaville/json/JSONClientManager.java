@@ -49,7 +49,7 @@ import edu.poly.bxmc.betaville.net.ProtectedManager;
 public class JSONClientManager implements ProtectedManager {
 
 	private String baseURL = "http://localhost/service/service.php";
-	
+
 	// The user's authentication token for this session as assigned by the server
 	private static String authToken;
 
@@ -66,8 +66,12 @@ public class JSONClientManager implements ProtectedManager {
 	public JSONClientManager(){
 		jsonFactory = new JsonFactory();
 	}
+	
+	private JsonParser doRequest(String request){
+		return doRequest(request, null);
+	}
 
-	private JsonParser doRequest(String request, PhysicalFileTransporter... fileTransporters){
+	private JsonParser doRequest(String request, PhysicalFileTransporter pft){
 		try {
 			URL url = null;
 			if(useGZIP){
@@ -76,11 +80,10 @@ public class JSONClientManager implements ProtectedManager {
 			else{
 				url = new URL(baseURL+"?"+request);
 			}
-			
-			
+
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-			
-			for(PhysicalFileTransporter pft : fileTransporters){
+
+			if(pft!=null){
 				connection.setDoOutput(true);
 				connection.setRequestMethod("POST");
 				OutputStream os = connection.getOutputStream();
@@ -88,10 +91,7 @@ public class JSONClientManager implements ProtectedManager {
 				for(int i=0; i<data.length; i++){
 					os.write(data[i]);
 				}
-				//connection.setDoOutput(false);
-				//connection.setRequestMethod("GET");
 			}
-			
 
 			return jsonFactory.createJsonParser(connection.getInputStream());
 		} catch (JsonParseException e) {

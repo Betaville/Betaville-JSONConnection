@@ -540,12 +540,13 @@ public class JSONClientManager implements ProtectedManager {
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#addBase(edu.poly.bxmc.betaville.model.Design, java.lang.String, java.lang.String, edu.poly.bxmc.betaville.net.PhysicalFileTransporter)
+	/*
+	 * (non-Javadoc)
+	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#addBase(edu.poly.bxmc.betaville.model.Design, java.lang.String, java.lang.String, edu.poly.bxmc.betaville.net.PhysicalFileTransporter, edu.poly.bxmc.betaville.net.PhysicalFileTransporter)
 	 */
 	@Override
 	public int addBase(Design design, String user, String pass,
-			PhysicalFileTransporter pft) {
+			PhysicalFileTransporter pft, PhysicalFileTransporter thumbTransporter) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

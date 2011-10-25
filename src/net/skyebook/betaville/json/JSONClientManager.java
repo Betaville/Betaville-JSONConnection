@@ -573,6 +573,16 @@ public class JSONClientManager implements ProtectedManager {
 	}
 
 	/* (non-Javadoc)
+	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#setThumbnailForObject(int, edu.poly.bxmc.betaville.net.PhysicalFileTransporter, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public int setThumbnailForObject(int designID, PhysicalFileTransporter pft,
+			String user, String pass) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#removeDesign(int, java.lang.String, java.lang.String)
 	 */
 	@Override

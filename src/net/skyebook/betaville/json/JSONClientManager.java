@@ -60,10 +60,12 @@ public class JSONClientManager implements ProtectedManager {
 
 	private static final String REQUEST_GZIP = "gz=1";
 
-	/**
-	 * 
-	 */
 	public JSONClientManager(){
+		this("http://localhost/service/service.php");
+	}
+	
+	public JSONClientManager(String server){
+		baseURL = server;
 		jsonFactory = new JsonFactory();
 	}
 
@@ -776,6 +778,13 @@ public class JSONClientManager implements ProtectedManager {
 	public int editWormholeLocation(int wormholeID, UTMCoordinate newLocation) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	public List<Design> getRecentProposals(int quantity){
+		String request = "section=activity&request=proposals&quantity="+quantity;
+		JsonParser response = doRequest(request);
+
+		return JSONConverter.toDesignList(response);
 	}
 
 }

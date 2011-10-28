@@ -66,19 +66,30 @@ public class JSONClientManager implements ProtectedManager {
 	public JSONClientManager(){
 		jsonFactory = new JsonFactory();
 	}
-	
+
 	private JsonParser doRequest(String request){
-		return doRequest(request, null);
+		return doRequest(request, false, null);
 	}
 
-	private JsonParser doRequest(String request, PhysicalFileTransporter pft){
+	private JsonParser doRequest(String request, boolean requiresToken){
+		return doRequest(request, requiresToken, null);
+	}
+
+	private JsonParser doRequest(String request, boolean requiresToken, PhysicalFileTransporter pft){
 		try {
 			URL url = null;
+
+			// add gzip parameter if it is requested
 			if(useGZIP){
 				url = new URL(baseURL+"?"+request+"&"+REQUEST_GZIP);
 			}
 			else{
 				url = new URL(baseURL+"?"+request);
+			}
+
+			// add token if this request requires it
+			if(requiresToken){
+				url = new URL(url.toString()+"&token="+authToken);
 			}
 
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
@@ -469,8 +480,7 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public boolean authenticateUser(String name, String pass) {
-		// TODO Auto-generated method stub
-		return false;
+		return startSession(name, pass);
 	}
 
 	/* (non-Javadoc)
@@ -478,7 +488,37 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public boolean startSession(String name, String pass) {
-		// TODO Auto-generated method stub
+
+		String request = "section=user&request=auth&username="+name+"&password="+pass;
+		JsonParser json = doRequest(request);
+
+		try {
+			boolean success = false;
+			
+			json.nextToken();
+			
+			while(json.nextToken()!=JsonToken.END_OBJECT){
+				
+				if(json.getCurrentName().equals("authenticationsuccess")){
+					json.nextToken();
+					success = json.getBooleanValue();
+				}
+				else if(json.getCurrentName().equals("token")){
+					json.nextToken();
+					authToken = json.getText();
+					System.out.println("Auth Token is: " + authToken);
+				}
+			}
+			
+			return success;
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return false;
 	}
 
@@ -568,7 +608,7 @@ public class JSONClientManager implements ProtectedManager {
 	@Override
 	public int addBase(Design design, String user, String pass,
 			PhysicalFileTransporter pft, PhysicalFileTransporter thumbTransporter) {
-		doRequest("section=design&request=addbase", pft);
+		doRequest("section=design&request=addbase", true, pft);
 		return 0;
 	}
 

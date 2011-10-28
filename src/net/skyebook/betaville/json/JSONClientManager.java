@@ -527,7 +527,31 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public boolean endSession(String sessionToken) {
-		// TODO Auto-generated method stub
+		String request = "section=user&request=endsession";
+		JsonParser json = doRequest(request, true);
+
+		try {
+			boolean success = false;
+			
+			json.nextToken();
+			
+			while(json.nextToken()!=JsonToken.END_OBJECT){
+				
+				if(json.getCurrentName().equals("endsession")){
+					json.nextToken();
+					success = json.getBooleanValue();
+				}
+			}
+			
+			return success;
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return false;
 	}
 

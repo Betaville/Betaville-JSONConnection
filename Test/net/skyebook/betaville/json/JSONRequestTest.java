@@ -17,8 +17,10 @@
  */
 package net.skyebook.betaville.json;
 
+import java.util.Iterator;
 import java.util.List;
 
+import edu.poly.bxmc.betaville.model.Comment;
 import edu.poly.bxmc.betaville.model.Design;
 
 /**
@@ -33,18 +35,22 @@ public class JSONRequestTest {
 	 */
 	public static void main(String[] args) {
 		JSONClientManager jcm = new JSONClientManager();
-		System.out.println(jcm.checkNameAvailability("sbook"));
-		
-		
-		Design design = jcm.findDesignByID(3894);
-		System.out.println(design.toString());
-		System.out.println(design.getCoordinate());
-		
+		System.out.println(jcm.checkNameAvailability("ibby123"));
+		Design design = jcm.findDesignByID(2364);
+		System.out.println(design+" "+design.getDescription());
+		long startTime = System.currentTimeMillis();
 		List<Design> designs = jcm.findAllDesignsByCity(2);
-		System.out.println(designs.size() + " designs retrieved");
-		
+		long endTime = System.currentTimeMillis();
+		System.out.println(designs.size() + " designs retrieved in "+(endTime-startTime)/1000+" seconds");
 		designs = jcm.findDesignsByName("Jan");
 		System.out.println(designs.size() + " designs retrieved");
+		List<Comment> comment = jcm.getComments(835);
+		Design destiny = jcm.findDesignByID(835);
+		 Iterator<Comment> it = comment.iterator();
+		/*for(Comment temp: comment ) {
+			System.out.println(it.next().getComment());System.out.println();
+			System.out.println();
+		} */
+		System.out.println(comment.size()+" comments in "+destiny.getName());
 	}
-
 }

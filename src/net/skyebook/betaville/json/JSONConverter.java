@@ -29,6 +29,7 @@ import org.codehaus.jackson.JsonToken;
 import edu.poly.bxmc.betaville.jme.map.GPSCoordinate;
 import edu.poly.bxmc.betaville.jme.map.ILocation;
 import edu.poly.bxmc.betaville.model.AudibleDesign;
+import edu.poly.bxmc.betaville.model.Comment;
 import edu.poly.bxmc.betaville.model.Design;
 import edu.poly.bxmc.betaville.model.EmptyDesign;
 import edu.poly.bxmc.betaville.model.ModeledDesign;
@@ -44,8 +45,6 @@ public class JSONConverter{
 
 	private static HashMap<String, Class<? extends Design>> designTypeMap;
 
-	private static Design tempDesign;
-
 	static{
 		designTypeMap = new HashMap<String, Class<? extends Design>>();
 
@@ -55,9 +54,93 @@ public class JSONConverter{
 		designTypeMap.put("sketch", SketchedDesign.class);
 		designTypeMap.put("empty", EmptyDesign.class);
 
-		tempDesign = new Design();
-
 	}
+	public static List<Comment> commentList(JsonParser json) {
+		List<Comment> comments = new ArrayList<Comment>();
+		try {
+
+			json.nextToken();
+			JsonToken token;
+
+			boolean arrayEntered = false;
+			while((token = json.nextToken())!=JsonToken.END_OBJECT){
+
+				if(token == JsonToken.START_ARRAY){
+					System.out.println("Start Array");
+					arrayEntered=true;
+				}
+
+				if(arrayEntered){
+					comments.add(toComments(json));
+					json.nextToken();
+				}
+			}
+
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return comments;
+	}
+
+	public static Comment toComments(JsonParser json){
+		Comment comment = new Comment(0, 0, "", "");
+
+		try {
+
+			json.nextToken();
+
+			while(json.nextToken()!=JsonToken.END_OBJECT){
+
+				if(json.getCurrentName().equals("commentid")){
+					json.nextToken();
+					comment.setID(Integer.parseInt(json.getText()));
+				}		
+				else if(json.getCurrentName().equals("designid")){
+					json.nextToken();
+					comment.setDesignID(json.getText());
+				}		
+				else if(json.getCurrentName().equals("user")) {
+					json.nextToken();
+					comment.setUser(json.getText());
+				}
+				else if(json.getCurrentName().equals("comment")){
+					json.nextToken();
+					comment.setComment(json.getText());
+				}		
+				else if(json.getCurrentName().equals("date")){
+					json.nextToken();
+					comment.setDate(json.getText());
+				}		
+				else if(json.getCurrentName().equals("repliesTo")){
+					json.nextToken();
+					comment.setRepliesTo(Integer.parseInt(json.getText()));
+				}		
+				
+				else{
+					// skip this token
+					json.nextToken();
+				}
+			}
+
+			
+		
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		
+		}
+
+		return comment;
+	}
+
 
 	public static List<Design> toDesignList(JsonParser json){
 		List<Design> designs = new ArrayList<Design>();
@@ -94,6 +177,7 @@ public class JSONConverter{
 
 	public static Design toDesign(JsonParser json){
 
+		Design tempDesign = new Design();
 		Design design = null;
 
 		try {
@@ -216,3 +300,4 @@ public class JSONConverter{
 		return gps;
 	}
 }
+

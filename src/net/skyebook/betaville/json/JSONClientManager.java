@@ -48,7 +48,7 @@ import edu.poly.bxmc.betaville.net.ProtectedManager;
  */
 public class JSONClientManager implements ProtectedManager {
 
-	private String baseURL = "http://localhost/service/service.php";
+	private String baseURL = "http://robert.betaville.net/service/service.php";
 
 	// The user's authentication token for this session as assigned by the server
 	private static String authToken;
@@ -409,8 +409,12 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public List<Comment> getComments(int designID) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		String request = "section=comment&request=getforid&id="+designID;
+		JsonParser response = doRequest(request);
+		
+		return JSONConverter.commentList(response);
+		
 	}
 
 	/* (non-Javadoc)

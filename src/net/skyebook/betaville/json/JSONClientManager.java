@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -61,7 +62,7 @@ public class JSONClientManager implements ProtectedManager {
 	private static final String REQUEST_GZIP = "gz=1";
 
 	public JSONClientManager(){
-		this("http://localhost/service/service.php");
+		this("http://robert.betaville.net/service/service.php");
 	}
 	
 	public JSONClientManager(String server){
@@ -560,7 +561,6 @@ public class JSONClientManager implements ProtectedManager {
 
 		return false;
 	}
-
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#addUser(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
@@ -735,8 +735,9 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public boolean addComment(Comment comment, String pass) {
-		// TODO Auto-generated method stub
-		return false;
+				String request = "section=comment&request=add&designID="+comment.getCommentDesignID()+"&token="+authToken+"&comment="+URLEncoder.encode(comment.getComment());
+				JsonParser json = doRequest(request,true);
+				return true;
 	}
 
 	/* (non-Javadoc)
@@ -789,6 +790,9 @@ public class JSONClientManager implements ProtectedManager {
 		JsonParser response = doRequest(request);
 
 		return JSONConverter.toDesignList(response);
+	}
+	public String getAuthToken() {
+		return authToken;
 	}
 
 }

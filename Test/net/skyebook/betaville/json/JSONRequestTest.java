@@ -34,23 +34,38 @@ public class JSONRequestTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		JSONClientManager jcm = new JSONClientManager();
+	JSONClientManager jcm = new JSONClientManager();
+		//Checking user name
 		System.out.println(jcm.checkNameAvailability("ibby123"));
+		
+		//Finding design by designID
 		Design design = jcm.findDesignByID(2364);
 		System.out.println(design+" "+design.getDescription());
+		
+		//Fetching designs from server
 		long startTime = System.currentTimeMillis();
 		List<Design> designs = jcm.findAllDesignsByCity(2);
 		long endTime = System.currentTimeMillis();
 		System.out.println(designs.size() + " designs retrieved in "+(endTime-startTime)/1000+" seconds");
+		
+		//Fetching design by name
 		designs = jcm.findDesignsByName("Jan");
 		System.out.println(designs.size() + " designs retrieved");
+		
+		//Fetching comments by designID
 		List<Comment> comment = jcm.getComments(835);
 		Design destiny = jcm.findDesignByID(835);
-		 Iterator<Comment> it = comment.iterator();
-		/*for(Comment temp: comment ) {
+		System.out.println(comment.size()+" comments in "+destiny.getName());
+		Iterator<Comment> it = comment.iterator();
+		for(Comment temp: comment ) {
 			System.out.println(it.next().getComment());System.out.println();
 			System.out.println();
-		} */
+		}
+		
+		//Adding comments after starting session, works.....
+		//jcm.startSession("ibby123", "123456");
+		Comment newcommie = new Comment(0,835,"ibbyzj","This design looks really nice!");
+		//jcm.addComment(newcommie, "123456");
 		System.out.println(comment.size()+" comments in "+destiny.getName());
-	}
 }
+	}

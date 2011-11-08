@@ -229,11 +229,8 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public List<Design> findAllDesignsByCity(int cityID) {
-
-
 		String request = "section=design&request=findbycity&city="+cityID;
 		JsonParser response = doRequest(request);
-
 		return JSONConverter.toDesignList(response);
 	}
 
@@ -343,9 +340,10 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public List<City> findAllCities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		String request =  "section=city&request=getall";
+		JsonParser response = doRequest(request,false,null);
+		return JSONConverter.cityList(response);
+		}
 
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.UnprotectedManager#findCitiesByName(java.lang.String)

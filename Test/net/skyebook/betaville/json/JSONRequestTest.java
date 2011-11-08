@@ -20,6 +20,7 @@ package net.skyebook.betaville.json;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.poly.bxmc.betaville.model.City;
 import edu.poly.bxmc.betaville.model.Comment;
 import edu.poly.bxmc.betaville.model.Design;
 
@@ -55,17 +56,25 @@ public class JSONRequestTest {
 		//Fetching comments by designID
 		List<Comment> comment = jcm.getComments(835);
 		Design destiny = jcm.findDesignByID(835);
-		System.out.println(comment.size()+" comments in "+destiny.getName());
-		Iterator<Comment> it = comment.iterator();
+		/*Iterator<Comment> it = comment.iterator();
 		for(Comment temp: comment ) {
 			System.out.println(it.next().getComment());System.out.println();
 			System.out.println();
-		}
+		}*/
 		
 		//Adding comments after starting session, works.....
-		//jcm.startSession("ibby123", "123456");
+		//jcm.startSession("ibby123", "damn it");
 		Comment newcommie = new Comment(0,835,"ibbyzj","This design looks really nice!");
-		//jcm.addComment(newcommie, "123456");
+		//jcm.addComment(newcommie, "damn it");
 		System.out.println(comment.size()+" comments in "+destiny.getName());
-}
+		
+		//Fetching Cities from Server ( not sure how important this is)
+		List<City> newCity = jcm.findAllCities();
+		System.out.println(newCity.size()+" cities fetched");
+		Iterator<City> cityit = newCity.iterator();
+		for(City temp: newCity ) {
+			System.out.print(cityit.next().getCity()+", ");
+			}
+	
+	}
 	}

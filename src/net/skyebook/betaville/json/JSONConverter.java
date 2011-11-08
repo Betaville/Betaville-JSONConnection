@@ -29,6 +29,7 @@ import org.codehaus.jackson.JsonToken;
 import edu.poly.bxmc.betaville.jme.map.GPSCoordinate;
 import edu.poly.bxmc.betaville.jme.map.ILocation;
 import edu.poly.bxmc.betaville.model.AudibleDesign;
+import edu.poly.bxmc.betaville.model.City;
 import edu.poly.bxmc.betaville.model.Comment;
 import edu.poly.bxmc.betaville.model.Design;
 import edu.poly.bxmc.betaville.model.EmptyDesign;
@@ -55,6 +56,73 @@ public class JSONConverter{
 		designTypeMap.put("empty", EmptyDesign.class);
 
 	}
+	
+	public static List<City> cityList(JsonParser json) {
+		List<City> cities = new ArrayList<City>();
+		try {
+			json.nextToken();
+			JsonToken token;
+			
+			boolean arrayEntered = false;
+			while((token = json.nextToken())!=JsonToken.END_OBJECT) {
+				
+				if(token == JsonToken.START_ARRAY) {
+					System.out.println("Entered Array");
+					arrayEntered = true;
+				}
+				if(arrayEntered){
+					cities.add(toCityList(json));
+					json.nextToken();
+				}
+			}
+
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return cities;
+	}	
+		public static City toCityList(JsonParser json) {
+			City newcity = new City("0","0","0",0);
+			
+			try {
+				json.nextToken();
+				
+				while(json.nextToken()!=JsonToken.END_OBJECT) {
+					if(json.getCurrentName()=="cityID") {
+						json.nextToken();
+						newcity.setCityID(Integer.parseInt(json.getText()));
+					}
+					else if(json.getCurrentName()=="cityName") {
+						json.nextToken();
+						newcity.setCityName(json.getText());
+					}
+					else if(json.getCurrentName()=="state") {
+						json.nextToken();
+						newcity.setCityState(json.getText());
+					}
+					else if(json.getCurrentName()=="country") {
+						json.nextToken();
+						newcity.setCityCountry(json.getText());
+					}
+					else { 
+						json.nextToken();
+					}
+				}
+			} catch (JsonParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			
+			}
+			return newcity;
+		}
 	public static List<Comment> commentList(JsonParser json) {
 		List<Comment> comments = new ArrayList<Comment>();
 		try {

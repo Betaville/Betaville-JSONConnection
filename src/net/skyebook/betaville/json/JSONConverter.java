@@ -65,7 +65,11 @@ public class JSONConverter{
 			
 			boolean arrayEntered = false;
 			while((token = json.nextToken())!=JsonToken.END_OBJECT) {
-				
+				if(token==null) {
+					System.out.println("Json returned an empty array");
+					cities = null;
+					return cities;
+				}
 				if(token == JsonToken.START_ARRAY) {
 					System.out.println("Entered Array");
 					arrayEntered = true;
@@ -132,7 +136,11 @@ public class JSONConverter{
 
 			boolean arrayEntered = false;
 			while((token = json.nextToken())!=JsonToken.END_OBJECT){
-
+				if(token==null) {
+					System.out.println("Json returned an empty array");
+					comments = null;
+					return comments;
+				}
 				if(token == JsonToken.START_ARRAY){
 					System.out.println("Start Array");
 					arrayEntered=true;
@@ -220,7 +228,11 @@ public class JSONConverter{
 
 			boolean arrayEntered = false;
 			while((token = json.nextToken())!=JsonToken.END_OBJECT){
-
+				if(token==null) {
+					System.out.println("Json returned an empty array");
+					designs = null;
+					return designs;
+				}
 				if(token == JsonToken.START_ARRAY){
 					System.out.println("Start Array");
 					arrayEntered=true;

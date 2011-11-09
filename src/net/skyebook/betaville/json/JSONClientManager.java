@@ -22,8 +22,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.codehaus.jackson.JsonFactory;
@@ -49,7 +51,7 @@ import edu.poly.bxmc.betaville.net.ProtectedManager;
  */
 public class JSONClientManager implements ProtectedManager {
 
-	private String baseURL = "http://robert.betaville.net/service/service.php";
+	private String baseURL = "http://localhost/service/service.php";
 
 	// The user's authentication token for this session as assigned by the server
 	private static String authToken;
@@ -62,7 +64,7 @@ public class JSONClientManager implements ProtectedManager {
 	private static final String REQUEST_GZIP = "gz=1";
 
 	public JSONClientManager(){
-		this("http://robert.betaville.net/service/service.php");
+		this("http://localhost/service/service.php");
 	}
 	
 	public JSONClientManager(String server){
@@ -89,6 +91,7 @@ public class JSONClientManager implements ProtectedManager {
 			else{
 				url = new URL(baseURL+"?"+request);
 			}
+			
 
 			// add token if this request requires it
 			if(requiresToken){
@@ -350,17 +353,33 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public List<Integer> findCitiesByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		String request =  "section=city&request=findbyname&name="+name;
+		JsonParser response = doRequest(request);
+		List<City> tempcity = new ArrayList<City>();
+		tempcity = JSONConverter.cityList(response);
+		List<Integer> retint = new ArrayList<Integer>();
+		Iterator<City> cityit = tempcity.iterator();
+		for(int i = 0; i<tempcity.size(); i++) {
+			retint.add(cityit.next().getCityID());
+			}
+		return retint;
+		}
 
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.UnprotectedManager#findCitiesByState(java.lang.String)
 	 */
 	@Override
 	public List<Integer> findCitiesByState(String state) {
-		// TODO Auto-generated method stub
-		return null;
+		String request =  "section=city&request=findbystate&name="+state;
+		JsonParser response = doRequest(request);
+		List<City> tempcity = new ArrayList<City>();
+		tempcity = JSONConverter.cityList(response);
+		List<Integer> retint = new ArrayList<Integer>();
+		Iterator<City> cityit = tempcity.iterator();
+		for(int i = 0; i<tempcity.size(); i++) {
+		retint.add(cityit.next().getCityID());
+			}
+		return retint;
 	}
 
 	/* (non-Javadoc)
@@ -368,9 +387,18 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public List<Integer> findCitiesByCountry(String country) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		String request =  "section=city&request=findbycountry&name="+country;
+		JsonParser response = doRequest(request);
+		List<City> tempcity = new ArrayList<City>();
+		tempcity = JSONConverter.cityList(response);
+		List<Integer> retint = new ArrayList<Integer>();
+		Iterator<City> cityit = tempcity.iterator();
+		for(int i = 0; i<tempcity.size(); i++) {
+		retint.add(cityit.next().getCityID());
+			}
+		return retint;
+	}		
+	
 
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.UnprotectedManager#findCityByID(int)

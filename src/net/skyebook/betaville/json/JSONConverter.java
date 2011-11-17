@@ -218,33 +218,36 @@ public class JSONConverter{
 	}
 
 
-	public static List<Design> toDesignList(JsonParser json){
+	public static List<Design> toDesignList(JsonParser json,JsonParser mson ){
 		List<Design> designs = new ArrayList<Design>();
 
 		try {
-
 			json.nextToken();
 			JsonToken token;
-
+	mson.nextToken();
+	JsonToken moken;
 			boolean arrayEntered = false;
+			int c = 0;
 			while((token = json.nextToken())!=JsonToken.END_OBJECT){
-				if(token==null) {
-					System.out.println("Json returned an empty array");
-					designs = null;
-					return designs;
-				}
+			if(c==0)moken = mson.nextToken();
 				if(token == JsonToken.START_ARRAY){
 					System.out.println("Start Array");
 					arrayEntered=true;
-				}
-
+					if(c==0) {
+					moken = mson.nextToken();
+					if((moken==JsonToken.END_ARRAY)) {return designs;}
+					c++;
+					}
+					}
+				
 				if(arrayEntered){
 					designs.add(toDesign(json));
 					json.nextToken();
 				}
+				}
 			}
 
-		} catch (JsonParseException e) {
+		 catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -256,17 +259,15 @@ public class JSONConverter{
 	}
 
 	public static Design toDesign(JsonParser json){
-
 		Design tempDesign = new Design();
 		Design design = null;
 
 		try {
-
+			
 			json.nextToken();
-
+			
 			while(json.nextToken()!=JsonToken.END_OBJECT){
-
-				if(json.getCurrentName().equals("designID")){
+					if(json.getCurrentName().equals("designID")){
 					json.nextToken();
 					tempDesign.setID(Integer.parseInt(json.getText()));
 				}
@@ -336,6 +337,7 @@ public class JSONConverter{
 					json.nextToken();
 				}
 			}
+			
 
 			design = new Design();
 			design.load(tempDesign);

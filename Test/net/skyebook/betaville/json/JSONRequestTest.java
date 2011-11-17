@@ -36,44 +36,47 @@ public class JSONRequestTest {
 	 */
 	public static void main(String[] args) {
 	JSONClientManager jcm = new JSONClientManager();
-		//Checking user name
+	/*
+	//Checking user name
 		System.out.println(jcm.checkNameAvailability("ibby123"));
 		
 		//Finding design by designID
 		Design design = jcm.findDesignByID(2364);
-		try {
+		
 		System.out.println(design+" "+design.getDescription());
-		} catch(NullPointerException e) { System.out.println(""); }
+		*/
 		//Fetching designs from server
 		long startTime = System.currentTimeMillis();
 		List<Design> designs = jcm.findAllDesignsByCity(2);
 		long endTime = System.currentTimeMillis();
-		try {
+		
 		System.out.println(designs.size() + " designs retrieved in "+(endTime-startTime)/1000+" seconds");
-		} catch(NullPointerException e) { System.out.println(""); }
+	/*
+		 
 		//Fetching design by name
-		List<Design> designsByName = jcm.findDesignsByName("dewqn");
-		try {
+		List<Design> designsByName = jcm.findDesignsByName("jan");
+		
 		System.out.println(designsByName.size() + " designs retrieved");
-		} catch(NullPointerException e) { System.out.println(""); }
+		
+		
 		//Fetching comments by designID
 		List<Comment> comment = jcm.getComments(835);
 		Design destiny = jcm.findDesignByID(835);
 		Iterator<Comment> it = comment.iterator();
-		try {
+		
 		for(Comment temp: comment ) {
 			System.out.println(it.next().getComment());System.out.println();
 			System.out.println();
 		}
-		} catch(NullPointerException e) { System.out.println(""); }
+		
 		
 		//Adding comments after starting session, works.....
 		//jcm.startSession("ibby123", "damn it");
-		Comment newcommie = new Comment(0,835,"ibbyzj","This design looks really nice!");
+		//Comment newcommie = new Comment(0,835,"ibbyzj","This design looks really nice!");
 		//jcm.addComment(newcommie, "damn it");
-		try {
+		
 		System.out.println(comment.size()+" comments in "+destiny.getName());
-		} catch(NullPointerException e) { System.out.println(""); }
+		
 		
 		//Fetching Cities from Server ( not sure how important this is)
 		List<City> newCity = jcm.findAllCities();
@@ -81,21 +84,8 @@ public class JSONRequestTest {
 		for(City temp: newCity ) {
 			System.out.print(cityit.next().getCity()+", ");
 			}
-		try {
+		
 		System.out.println(newCity.size()+" cities fetched");
-		} catch(NullPointerException e) { System.out.println(""); }
-		
-		try {
-		List<Integer> listint = jcm.findCitiesByCountry("New york");
-		
-		Iterator<Integer> intit = listint.iterator();
-		
-		for(Integer temp: listint) {
-			System.out.print(intit.next());
-			}
-		} catch(NullPointerException e) { System.out.println(""); }
-			
-		
-	
-	}
+*/
+		}
 	}

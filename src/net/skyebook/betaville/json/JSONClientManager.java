@@ -51,7 +51,7 @@ import edu.poly.bxmc.betaville.net.ProtectedManager;
  */
 public class JSONClientManager implements ProtectedManager {
 
-	private String baseURL = "http://localhost/service/service.php";
+	private String baseURL = "http://localhost/Betaville-Web-Service/service.php";
 
 	// The user's authentication token for this session as assigned by the server
 	private static String authToken;
@@ -64,7 +64,7 @@ public class JSONClientManager implements ProtectedManager {
 	private static final String REQUEST_GZIP = "gz=1";
 
 	public JSONClientManager(){
-		this("http://localhost/service/service.php");
+		this("http://localhost/Betaville-Web-Service/service.php");
 	}
 	
 	public JSONClientManager(String server){
@@ -203,8 +203,8 @@ public class JSONClientManager implements ProtectedManager {
 	public List<Design> findDesignsByName(String name) {
 		String request = "section=design&request=findbyname&name="+name;
 		JsonParser response = doRequest(request);
-
-		return JSONConverter.toDesignList(response);
+		JsonParser response1 = doRequest(request);
+		return JSONConverter.toDesignList(response,response1);
 	}
 
 	/* (non-Javadoc)
@@ -233,8 +233,16 @@ public class JSONClientManager implements ProtectedManager {
 	@Override
 	public List<Design> findAllDesignsByCity(int cityID) {
 		String request = "section=design&request=findbycity&city="+cityID;
+		long startTime = System.currentTimeMillis();
 		JsonParser response = doRequest(request);
-		return JSONConverter.toDesignList(response);
+		long endTime = System.currentTimeMillis();
+		System.out.println("1st request takes "+(endTime-startTime)/1000+" seconds");
+		long startTime1 = System.currentTimeMillis();
+		JsonParser response1 = doRequest(request);
+		long endTime1 = System.currentTimeMillis();
+		System.out.println("2nd request takes "+(endTime-startTime)/1000+" seconds");
+		
+		return JSONConverter.toDesignList(response,response1);
 	}
 
 	/* (non-Javadoc)
@@ -405,12 +413,16 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public String[] findCityByID(int cityID) {
-
-		String request = "section=design&request=findbyid&id="+cityID;
+		String request =  "section=city&request=findbyid&cityid="+cityID;
 		JsonParser response = doRequest(request);
-
-
-		return null;
+		List<City> tempcity = new ArrayList<City>();
+		tempcity = JSONConverter.cityList(response);
+		String[] retstring = new String[1];
+		Iterator<City> cityit = tempcity.iterator();
+		for(int i = 0;i<tempcity.size();i++) {
+			retstring[i] = cityit.next().getCity();
+			}
+		return retstring;
 	}
 
 	/* (non-Javadoc)
@@ -418,9 +430,9 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public String[] findCityByAll(String name, String state, String country) {
-		// TODO Auto-generated method stub
+		
 		return null;
-	}
+		}
 
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.UnprotectedManager#reportSpamComment(int)
@@ -439,7 +451,6 @@ public class JSONClientManager implements ProtectedManager {
 		
 		String request = "section=comment&request=getforid&id="+designID;
 		JsonParser response = doRequest(request);
-		
 		return JSONConverter.commentList(response);
 		
 	}

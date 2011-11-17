@@ -230,7 +230,7 @@ public class JSONConverter{
 			while((token = json.nextToken())!=JsonToken.END_OBJECT){
 				if(token==null) {
 					System.out.println("Json returned an empty array");
-					designs = null;
+					//designs = null;
 					return designs;
 				}
 				if(token == JsonToken.START_ARRAY){
@@ -239,7 +239,8 @@ public class JSONConverter{
 				}
 
 				if(arrayEntered){
-					designs.add(toDesign(json));
+					Design design = toDesign(json);
+					if(design.getName()!=null)designs.add(design);
 					json.nextToken();
 				}
 			}

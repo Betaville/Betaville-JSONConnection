@@ -19,9 +19,9 @@ public class EmptyResponseTest {
 	public static void main(String[] args) {
 		JSONClientManager jcm = new JSONClientManager();
 		long startTime = System.currentTimeMillis();
-		List<Design> designs = jcm.findAllDesignsByCity(20);
+		List<Design> designs = jcm.findAllDesignsByCity(2);
 		long endTime = System.currentTimeMillis();
-		
+		System.out.println(designs.size());
 		System.out.println("Took " + (endTime - startTime) + " ms");
 	}
 

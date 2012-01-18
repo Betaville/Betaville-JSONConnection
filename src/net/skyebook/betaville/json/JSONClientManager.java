@@ -616,16 +616,6 @@ public class JSONClientManager implements ProtectedManager {
 	}
 
 	/* (non-Javadoc)
-	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#addDesign(edu.poly.bxmc.betaville.model.Design, java.lang.String, java.lang.String, edu.poly.bxmc.betaville.net.PhysicalFileTransporter)
-	 */
-	@Override
-	public int addDesign(Design design, String user, String pass,
-			PhysicalFileTransporter pft) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#addEmptyDesign(edu.poly.bxmc.betaville.model.EmptyDesign, java.lang.String, java.lang.String)
 	 */
 	@Override

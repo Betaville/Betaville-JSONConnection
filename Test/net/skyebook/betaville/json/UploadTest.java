@@ -33,7 +33,7 @@ public class UploadTest {
 		
 		PhysicalFileTransporter data = new PhysicalFileTransporter(contents.getBytes());
 		JSONClientManager jcm = new JSONClientManager();
-		System.out.println(jcm.addBase(null, null, null, data, null));
+		System.out.println(jcm.addBase(null, null, null, data, null, null));
 	}
 
 }

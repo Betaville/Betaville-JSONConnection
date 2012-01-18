@@ -630,7 +630,7 @@ public class JSONClientManager implements ProtectedManager {
 	@Override
 	public int addProposal(Design design, String removables, String user,
 			String pass, PhysicalFileTransporter pft,
-			PhysicalFileTransporter thumbTransporter,
+			PhysicalFileTransporter thumbTransporter, PhysicalFileTransporter sourceMediaTransporter,
 			ProposalPermission permission) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -642,7 +642,7 @@ public class JSONClientManager implements ProtectedManager {
 	@Override
 	public int addVersion(Design design, String removables, String user,
 			String pass, PhysicalFileTransporter pft,
-			PhysicalFileTransporter thumbTransporter) {
+			PhysicalFileTransporter thumbTransporter, PhysicalFileTransporter sourceMediaTransporter) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -653,7 +653,7 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public int addBase(Design design, String user, String pass,
-			PhysicalFileTransporter pft, PhysicalFileTransporter thumbTransporter) {
+			PhysicalFileTransporter pft, PhysicalFileTransporter thumbTransporter, PhysicalFileTransporter sourceMediaTransporter) {
 		doRequest("section=design&request=addbase", true, pft);
 		return 0;
 	}

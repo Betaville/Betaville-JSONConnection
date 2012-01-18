@@ -1,6 +1,6 @@
 /**  
  *  Betaville JSON Connection
- *  Copyright (C) 2011 Skye Book
+ *  Copyright (C) 2011-2012 Skye Book
  *  
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -692,7 +692,7 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public boolean changeDesignFile(int designID, String user, String pass,
-			PhysicalFileTransporter pft, boolean textureOnOff) {
+			PhysicalFileTransporter pft, PhysicalFileTransporter sourceMedia, boolean textureOnOff) {
 		// TODO Auto-generated method stub
 		return false;
 	}

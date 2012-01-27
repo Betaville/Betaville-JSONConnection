@@ -102,5 +102,15 @@ jcm.startSession("ibby123", "123456");
 jcm.removeDesign(1250);
  
  
+ 
+ 
+//Changing user Bio, need to start session first....Authentication
+jcm.startSession("ibby123","123456");
+jcm.changeBio("oh new new new bio");
 
+
+//Change Design description now working
+jcm.startSession("ibby123","123456");
+jcm.changeDesignDescription(2404,"This better change");
 */
+

@@ -602,14 +602,6 @@ public class JSONClientManager implements ProtectedManager {
 	}
 
 	/* (non-Javadoc)
-	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#changeBio(java.lang.String, java.lang.String, java.lang.String)
-	 */
-	public boolean changeBio(String name, String pass, String newBio) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#addEmptyDesign(edu.poly.bxmc.betaville.model.EmptyDesign, java.lang.String, java.lang.String)
 	 */
 	public int addEmptyDesign(EmptyDesign design, String user, String pass) {
@@ -776,8 +768,9 @@ public class JSONClientManager implements ProtectedManager {
 
 	@Override
 	public boolean changeBio(String newBio) {
-		// TODO Auto-generated method stub
-		return false;
+		String request = "section=user&request=changebio&bio="+URLEncoder.encode(newBio);
+		JsonParser json = doRequest(request,true);
+		return true;
 	}
 
 	@Override
@@ -841,8 +834,9 @@ public class JSONClientManager implements ProtectedManager {
 
 	@Override
 	public boolean changeDesignDescription(int designID, String newDescription) {
-		// TODO Auto-generated method stub
-		return false;
+		String request = "section=design&request=changedescription&id="+designID+"&description="+URLEncoder.encode(newDescription);
+		JsonParser json = doRequest(request,true);
+		return true;
 	}
 
 	@Override

@@ -596,9 +596,10 @@ public class JSONClientManager implements ProtectedManager {
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#changePassword(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public boolean changePassword(String name, String pass, String newPass) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean changePassword(String name, String oldPass, String newPass) {
+		String request = "section=user&request=changepass&oldPass="+oldPass+"&newPass="+newPass;
+		JsonParser response = doRequest(request,true);
+		return true;
 	}
 
 	/* (non-Javadoc)
@@ -704,24 +705,6 @@ public class JSONClientManager implements ProtectedManager {
 	}
 
 	/* (non-Javadoc)
-	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#faveDesign(int, java.lang.String, java.lang.String)
-	 */
-	public int faveDesign(int designID, String user, String pass) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	
-
-	/* (non-Javadoc)
-	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#deleteComment(int, java.lang.String, java.lang.String)
-	 */
-	public boolean deleteComment(int commentID, String user, String pass) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#addWormhole(edu.poly.bxmc.betaville.jme.map.ILocation, java.lang.String, int)
 	 */
 	@Override
@@ -819,10 +802,11 @@ public class JSONClientManager implements ProtectedManager {
 		return 0;
 	}
 
-	@Override
+	
 	public boolean changeDesignName(int designID, String newName) {
-		// TODO Auto-generated method stub
-		return false;
+		String request = "section=design&request=changename&id="+designID+"&name="+URLEncoder.encode(newName);
+		JsonParser json = doRequest(request,true);
+		return true;
 	}
 
 	@Override
@@ -841,8 +825,9 @@ public class JSONClientManager implements ProtectedManager {
 
 	@Override
 	public boolean changeDesignAddress(int designID, String newAddress) {
-		// TODO Auto-generated method stub
-		return false;
+		String request = "section=design&request=changeaddress&id="+designID+"&address="+URLEncoder.encode(newAddress);
+		JsonParser json = doRequest(request,true);
+		return true;
 	}
 
 	@Override

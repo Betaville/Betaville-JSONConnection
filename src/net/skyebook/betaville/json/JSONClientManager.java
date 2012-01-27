@@ -51,7 +51,7 @@ import edu.poly.bxmc.betaville.net.ProtectedManager;
  */
 public class JSONClientManager implements ProtectedManager {
 
-	private String baseURL = "http://localhost/service/service.php";
+	private String baseURL = "http://localhost/Betaville-Web-Serviceservice/service.php";
 
 	// The user's authentication token for this session as assigned by the server
 	private static String authToken;
@@ -64,7 +64,7 @@ public class JSONClientManager implements ProtectedManager {
 	private static final String REQUEST_GZIP = "gz=1";
 
 	public JSONClientManager(){
-		this("http://localhost/service/service.php");
+		this("http://localhost/Betaville-Web-Service/service.php");
 	}
 	
 	public JSONClientManager(String server){
@@ -203,7 +203,6 @@ public class JSONClientManager implements ProtectedManager {
 	public List<Design> findDesignsByName(String name) {
 		String request = "section=design&request=findbyname&name="+name;
 		JsonParser response = doRequest(request);
-
 		return JSONConverter.toDesignList(response);
 	}
 
@@ -381,6 +380,14 @@ public class JSONClientManager implements ProtectedManager {
 			}
 		return retint;
 	}
+	
+	/* (non-Javadoc)
+	 * @see edu.poly.bxmc.betaville.net.UnprotectedManager#getUserLevel(java.lang.String)
+	 */
+	@Override
+	public UserType getUserLevel(String user) {
+		return null;
+	}
 
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.UnprotectedManager#findCitiesByCountry(java.lang.String)
@@ -405,11 +412,8 @@ public class JSONClientManager implements ProtectedManager {
 	 */
 	@Override
 	public String[] findCityByID(int cityID) {
-
 		String request = "section=design&request=findbyid&id="+cityID;
 		JsonParser response = doRequest(request);
-
-
 		return null;
 	}
 
@@ -439,7 +443,6 @@ public class JSONClientManager implements ProtectedManager {
 		
 		String request = "section=comment&request=getforid&id="+designID;
 		JsonParser response = doRequest(request);
-		
 		return JSONConverter.commentList(response);
 		
 	}
@@ -462,14 +465,7 @@ public class JSONClientManager implements ProtectedManager {
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.poly.bxmc.betaville.net.UnprotectedManager#getUserLevel(java.lang.String)
-	 */
-	@Override
-	public UserType getUserLevel(String user) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.UnprotectedManager#getWormholesWithin(edu.poly.bxmc.betaville.jme.map.UTMCoordinate, int, int)
@@ -511,7 +507,6 @@ public class JSONClientManager implements ProtectedManager {
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#authenticateUser(java.lang.String, java.lang.String)
 	 */
-	@Override
 	public boolean authenticateUser(String name, String pass) {
 		return startSession(name, pass);
 	}
@@ -609,7 +604,6 @@ public class JSONClientManager implements ProtectedManager {
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#changeBio(java.lang.String, java.lang.String, java.lang.String)
 	 */
-	@Override
 	public boolean changeBio(String name, String pass, String newBio) {
 		// TODO Auto-generated method stub
 		return false;
@@ -618,7 +612,6 @@ public class JSONClientManager implements ProtectedManager {
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#addEmptyDesign(edu.poly.bxmc.betaville.model.EmptyDesign, java.lang.String, java.lang.String)
 	 */
-	@Override
 	public int addEmptyDesign(EmptyDesign design, String user, String pass) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -627,7 +620,6 @@ public class JSONClientManager implements ProtectedManager {
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#addProposal(edu.poly.bxmc.betaville.model.Design, java.lang.String, java.lang.String, java.lang.String, edu.poly.bxmc.betaville.net.PhysicalFileTransporter, edu.poly.bxmc.betaville.net.PhysicalFileTransporter, edu.poly.bxmc.betaville.model.ProposalPermission)
 	 */
-	@Override
 	public int addProposal(Design design, String removables, String user,
 			String pass, PhysicalFileTransporter pft,
 			PhysicalFileTransporter thumbTransporter, PhysicalFileTransporter sourceMediaTransporter,
@@ -639,7 +631,6 @@ public class JSONClientManager implements ProtectedManager {
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#addVersion(edu.poly.bxmc.betaville.model.Design, java.lang.String, java.lang.String, java.lang.String, edu.poly.bxmc.betaville.net.PhysicalFileTransporter, edu.poly.bxmc.betaville.net.PhysicalFileTransporter)
 	 */
-	@Override
 	public int addVersion(Design design, String removables, String user,
 			String pass, PhysicalFileTransporter pft,
 			PhysicalFileTransporter thumbTransporter, PhysicalFileTransporter sourceMediaTransporter) {
@@ -651,7 +642,6 @@ public class JSONClientManager implements ProtectedManager {
 	 * (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#addBase(edu.poly.bxmc.betaville.model.Design, java.lang.String, java.lang.String, edu.poly.bxmc.betaville.net.PhysicalFileTransporter, edu.poly.bxmc.betaville.net.PhysicalFileTransporter)
 	 */
-	@Override
 	public int addBase(Design design, String user, String pass,
 			PhysicalFileTransporter pft, PhysicalFileTransporter thumbTransporter, PhysicalFileTransporter sourceMediaTransporter) {
 		doRequest("section=design&request=addbase", true, pft);
@@ -661,7 +651,6 @@ public class JSONClientManager implements ProtectedManager {
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#setThumbnailForObject(int, edu.poly.bxmc.betaville.net.PhysicalFileTransporter, java.lang.String, java.lang.String)
 	 */
-	@Override
 	public int setThumbnailForObject(int designID, PhysicalFileTransporter pft,
 			String user, String pass) {
 		// TODO Auto-generated method stub
@@ -669,18 +658,8 @@ public class JSONClientManager implements ProtectedManager {
 	}
 
 	/* (non-Javadoc)
-	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#removeDesign(int, java.lang.String, java.lang.String)
-	 */
-	@Override
-	public int removeDesign(int designID, String user, String pass) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#changeDesignName(int, java.lang.String, java.lang.String, java.lang.String)
 	 */
-	@Override
 	public boolean changeDesignName(int designID, String user, String pass,
 			String newName) {
 		// TODO Auto-generated method stub
@@ -690,7 +669,6 @@ public class JSONClientManager implements ProtectedManager {
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#changeDesignFile(int, java.lang.String, java.lang.String, edu.poly.bxmc.betaville.net.PhysicalFileTransporter, boolean)
 	 */
-	@Override
 	public boolean changeDesignFile(int designID, String user, String pass,
 			PhysicalFileTransporter pft, PhysicalFileTransporter sourceMedia, boolean textureOnOff) {
 		// TODO Auto-generated method stub
@@ -700,7 +678,6 @@ public class JSONClientManager implements ProtectedManager {
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#changeDesignDescription(int, java.lang.String, java.lang.String, java.lang.String)
 	 */
-	@Override
 	public boolean changeDesignDescription(int designID, String user,
 			String pass, String newDescription) {
 		// TODO Auto-generated method stub
@@ -710,7 +687,6 @@ public class JSONClientManager implements ProtectedManager {
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#changeDesignAddress(int, java.lang.String, java.lang.String, java.lang.String)
 	 */
-	@Override
 	public boolean changeDesignAddress(int designID, String user, String pass,
 			String newAddress) {
 		// TODO Auto-generated method stub
@@ -720,7 +696,6 @@ public class JSONClientManager implements ProtectedManager {
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#changeDesignURL(int, java.lang.String, java.lang.String, java.lang.String)
 	 */
-	@Override
 	public boolean changeDesignURL(int designID, String user, String pass,
 			String newURL) {
 		// TODO Auto-generated method stub
@@ -730,7 +705,6 @@ public class JSONClientManager implements ProtectedManager {
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#changeModeledDesignLocation(int, float, java.lang.String, java.lang.String, edu.poly.bxmc.betaville.jme.map.UTMCoordinate)
 	 */
-	@Override
 	public boolean changeModeledDesignLocation(int designID, float rotY,
 			String user, String pass, UTMCoordinate newLocation) {
 		// TODO Auto-generated method stub
@@ -740,26 +714,16 @@ public class JSONClientManager implements ProtectedManager {
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#faveDesign(int, java.lang.String, java.lang.String)
 	 */
-	@Override
 	public int faveDesign(int designID, String user, String pass) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#addComment(edu.poly.bxmc.betaville.model.Comment, java.lang.String)
-	 */
-	@Override
-	public boolean addComment(Comment comment, String pass) {
-				String request = "section=comment&request=add&designID="+comment.getCommentDesignID()+"&token="+authToken+"&comment="+URLEncoder.encode(comment.getComment());
-				JsonParser json = doRequest(request,true);
-				return true;
-	}
+	
 
 	/* (non-Javadoc)
 	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#deleteComment(int, java.lang.String, java.lang.String)
 	 */
-	@Override
 	public boolean deleteComment(int commentID, String user, String pass) {
 		// TODO Auto-generated method stub
 		return false;
@@ -804,11 +768,123 @@ public class JSONClientManager implements ProtectedManager {
 	public List<Design> getRecentProposals(int quantity){
 		String request = "section=activity&request=proposals&quantity="+quantity;
 		JsonParser response = doRequest(request);
-
 		return JSONConverter.toDesignList(response);
 	}
 	public String getAuthToken() {
 		return authToken;
 	}
+
+	@Override
+	public boolean changeBio(String newBio) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int addEmptyDesign(EmptyDesign design) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int addProposal(Design design, String removables,
+			PhysicalFileTransporter pft,
+			PhysicalFileTransporter thumbTransporter,
+			PhysicalFileTransporter sourceMediaTransporter,
+			ProposalPermission permission) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int addVersion(Design design, String removables,
+			PhysicalFileTransporter pft,
+			PhysicalFileTransporter thumbTransporter,
+			PhysicalFileTransporter sourceMediaTransporter) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int addBase(Design design, PhysicalFileTransporter pft,
+			PhysicalFileTransporter thumbTransporter,
+			PhysicalFileTransporter sourceMediaTransporter) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int setThumbnailForObject(int designID, PhysicalFileTransporter pft) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int removeDesign(int designID) {
+		String request = "section=design&request=deletedesign&id="+designID;
+		JsonParser json = doRequest(request,true);
+		return 0;
+	}
+
+	@Override
+	public boolean changeDesignName(int designID, String newName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean changeDesignFile(int designID, PhysicalFileTransporter pft,
+			PhysicalFileTransporter sourceMedia, boolean textureOnOff) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean changeDesignDescription(int designID, String newDescription) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean changeDesignAddress(int designID, String newAddress) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean changeDesignURL(int designID, String newURL) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean changeModeledDesignLocation(int designID, float rotY,
+			UTMCoordinate newLocation) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int faveDesign(int designID) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	/* (non-Javadoc)
+	 * @see edu.poly.bxmc.betaville.net.ProtectedManager#addComment(edu.poly.bxmc.betaville.model.Comment, java.lang.String)
+	 */
+	public boolean addComment(Comment comment) {
+				String request = "section=comment&request=add&designID="+comment.getCommentDesignID()+"&token="+authToken+"&comment="+URLEncoder.encode(comment.getComment());
+				JsonParser json = doRequest(request,true);
+				return true;
+	}
+
+	@Override
+	public boolean deleteComment(int commentID) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
 
 }

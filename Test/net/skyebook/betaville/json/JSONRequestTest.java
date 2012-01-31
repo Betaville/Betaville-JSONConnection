@@ -37,6 +37,7 @@ public class JSONRequestTest {
 	public static void main(String[] args) {
 	JSONClientManager jcm = new JSONClientManager();
 	System.out.println("Betaville JSONClientManager Test file");
+	System.out.println("Working");
 	}
 	}
 

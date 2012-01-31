@@ -51,7 +51,7 @@ import edu.poly.bxmc.betaville.net.ProtectedManager;
  */
 public class JSONClientManager implements ProtectedManager {
 
-	private String baseURL = "http://localhost/Betaville-Web-Serviceservice/service.php";
+	private String baseURL = "http://localhost/service/service.php";
 
 	// The user's authentication token for this session as assigned by the server
 	private static String authToken;
@@ -64,7 +64,7 @@ public class JSONClientManager implements ProtectedManager {
 	private static final String REQUEST_GZIP = "gz=1";
 
 	public JSONClientManager(){
-		this("http://localhost/Betaville-Web-Service/service.php");
+		this("http://localhost/service/service.php");
 	}
 	
 	public JSONClientManager(String server){

@@ -33,6 +33,7 @@ import edu.poly.bxmc.betaville.model.City;
 import edu.poly.bxmc.betaville.model.Comment;
 import edu.poly.bxmc.betaville.model.Design;
 import edu.poly.bxmc.betaville.model.EmptyDesign;
+import edu.poly.bxmc.betaville.model.IUser.UserType;
 import edu.poly.bxmc.betaville.model.ModeledDesign;
 import edu.poly.bxmc.betaville.model.SketchedDesign;
 import edu.poly.bxmc.betaville.model.VideoDesign;
@@ -90,6 +91,41 @@ public class JSONConverter{
 
 		return cities;
 	}	
+	public static  UserType toUser(JsonParser json) {
+		UserType user = null;
+		String getUsertype ="";
+		try {
+			json.nextToken();
+			while(json.nextToken()!=JsonToken.END_OBJECT) {
+					json.nextToken();
+					getUsertype = json.getText();
+			}
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		
+		}
+		if(getUsertype.equals("moderator")) {
+			user = UserType.MODERATOR;
+		}
+		else if(getUsertype.equals("base_committer")) {
+			user = UserType.BASE_COMMITTER;
+		}
+		else if(getUsertype.equals("member")) {
+			user = UserType.MEMBER;
+		}
+		else if(getUsertype.equals("admin")) {
+			user = UserType.ADMIN;
+		}
+		else if(getUsertype.equals("null")) {
+			user = null;
+		}
+		//System.out.println(user.toString());
+		return user;
+	}
 		public static City toCityList(JsonParser json) {
 			City newcity = new City("0","0","0",0);
 			

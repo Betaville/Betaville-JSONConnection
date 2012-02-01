@@ -23,6 +23,7 @@ import java.util.List;
 import edu.poly.bxmc.betaville.model.City;
 import edu.poly.bxmc.betaville.model.Comment;
 import edu.poly.bxmc.betaville.model.Design;
+import edu.poly.bxmc.betaville.model.IUser.UserType;
 
 /**
  * A series of tests for the {@link JSONClientManager}
@@ -113,5 +114,10 @@ jcm.changeBio("oh new new new bio");
 //Change Design description now working
 jcm.startSession("ibby123","123456");
 jcm.changeDesignDescription(2404,"This better change");
+
+//GetUSerType 
+jcm.startSession("ibby123","ReAllY?");
+UserType getUser = jcm.getUserLevel("ibby123");
+System.out.println(getUser.toString());
 */
 

@@ -865,6 +865,24 @@ public class JSONClientManager implements ProtectedManager {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	/* (non-Javadoc)
+	 * @see edu.poly.bxmc.betaville.net.UnprotectedManager#getVersionsOfProposal(int)
+	 */
+	@Override
+	public List<Design> getVersionsOfProposal(int proposalRootDesignID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.poly.bxmc.betaville.net.UnprotectedManager#findAllProposalsInCity(int)
+	 */
+	@Override
+	public List<Design> findAllProposalsInCity(int cityID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 
